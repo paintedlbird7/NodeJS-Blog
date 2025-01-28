@@ -3,8 +3,15 @@ require('dotenv').config
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
 
+const connectDB = require('./server/config/db');
+
 const app = express();
-const PORT = 5001 || process.env.PORT
+const PORT = process.env.PORT || 5001;
+
+// Connect to DB
+console.log('MONGO_URI:', process.env.MONGO_URI);
+// uncomment this:
+// connectDB();
 
 app.use(express.static('public'));
 // Templating engine
