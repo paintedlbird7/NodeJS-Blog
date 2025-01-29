@@ -1,5 +1,6 @@
 // Load environment variables from the .env file
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 const express = require('express'); // Import the Express framework
 const expressLayout = require('express-ejs-layouts'); // Import express-ejs-layouts for layout management
@@ -20,6 +21,14 @@ app.use(express.json());
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
+
+
+// const mongoURI = process.env.MONGO_URI;
+// console.log("MONGO_URI:", mongoURI); // Debugging to check if the value is loaded
+
+// mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => console.log("Connected to MongoDB"))
+//   .catch(err => console.error("Database connection failed:", err));
 
 // Set up the templating engine
 app.use(expressLayout); // Use express-ejs-layouts for layout support
