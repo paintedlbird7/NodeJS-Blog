@@ -15,6 +15,9 @@ console.log('MONGO_URI:', process.env.MONGO_URI);
 // Uncomment the connectDB() line once MONGO_URI issue is resolved
 connectDB(); // Connects to MongoDB using the URI from the .env file
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
