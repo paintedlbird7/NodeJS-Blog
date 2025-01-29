@@ -37,6 +37,8 @@ app.set('view engine', 'ejs'); // Set EJS as the templating engine
 
 // Define the main route using the router in the specified file
 app.use('/', require('./server/routes/main'));
+app.use('/', require('./server/routes/admin'));
+
 
 // Start the server and listen on the specified port
 app.listen(PORT, () => {

@@ -41,6 +41,7 @@ router.get('', async (req, res) => {
 
 });
 
+// Basic Router code
 // router.get('', async (req, res) => {
 //   const locals = {
 //     title: "NodeJs Blog",
