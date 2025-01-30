@@ -5,7 +5,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const adminLayouts = '../views/layouts/admin';
+const adminLayout = '../views/layouts/admin';
 const jwtSecret = process.env.JWT_SECRET;
 
 /**
@@ -90,7 +90,30 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
         res.render('admin/dashboard', {
           locals,
           data,
-        //   layout: adminLayout
+          layout: adminLayout
+        });
+    
+      } catch (error) {
+        console.log(error);
+      }  
+});
+
+/**
+ * GET /
+ * Admin - Create New Post
+*/
+router.get('/add-post', authMiddleware, async (req, res) => {
+   
+    try {
+        const locals = {
+          title: 'Add Post',
+          description: 'Simple Blog created with NodeJs, Express & MongoDb.'
+        }
+    
+        const data = await Post.find();
+        res.render('admin/add-post', {
+          locals,
+          layout: adminLayout
         });
     
       } catch (error) {
