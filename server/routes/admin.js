@@ -8,6 +8,24 @@ const jwt = require('jsonwebtoken');
 const adminLayouts = '../views/layouts/admin';
 const jwtSecret = process.env.JWT_SECRET;
 
+
+/**
+ * GET /
+ * ADMIN - Login Page
+*/
+router.get('/admin', async (req, res) => {
+    try {
+      const locals = {
+          title: "Admin",
+          description: "Simple Blog created with NodeJs, Express & MongoDb."
+        }
+  
+      res.render('admin/index', { locals, layout: adminLayouts });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  
 /**
  * POST /
  * Admin - Check Login
@@ -44,26 +62,13 @@ router.post('/admin', async (req, res) => {
 router.get('/dashboard', 
     // authMiddleware, 
     async (req, res) => {
-    res.render('admin/dashboard');
-    // try {
-    //   const locals = {
-    //     title: 'Dashboard',
-    //     description: 'Simple Blog created with NodeJs, Express & MongoDb.'
-    //   }
-  
-    //   const data = await Post.find();
-    //   res.render('admin/dashboard', {
-    //     locals,
-    //     data,
-    //     layout: adminLayout
-    //   });
-  
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  
+    res.render('admin/dashboard'); 
   });
 
+  /**
+ * Basic GET /
+ * Admin Dashboard
+*/
 // router.post('/admin', async (req, res) => {
 //     try {
 //       const { username, password } = req.body;
@@ -90,23 +95,6 @@ router.get('/dashboard',
 //       console.log(error);
 //     }
 //   });
-
-/**
- * GET /
- * ADMIN - Login Page
-*/
-router.get('/admin', async (req, res) => {
-  try {
-    const locals = {
-        title: "Admin",
-        description: "Simple Blog created with NodeJs, Express & MongoDb."
-      }
-
-    res.render('admin/index', { locals, layout: adminLayouts });
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 /**
  * POST /
