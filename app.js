@@ -1,7 +1,10 @@
 // Load environment variables from the .env file
 require('dotenv').config();
-const mongoose = require('mongoose');
 
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const express = require('express'); // Import the Express framework
 const expressLayout = require('express-ejs-layouts'); // Import express-ejs-layouts for layout management
 const connectDB = require('./server/config/db'); // Import the database connection function
@@ -13,27 +16,31 @@ const PORT = process.env.PORT || 5001; // Set the port from the environment vari
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
 // Connect to the database
-// Uncomment the connectDB() line once MONGO_URI issue is resolved
 connectDB(); // Connects to MongoDB using the URI from the .env file
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI
+    }),
+    //cookie: { maxAge: new Date ( Date.now() + (3600000) ) } 
+  }));
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-
-// const mongoURI = process.env.MONGO_URI;
-// console.log("MONGO_URI:", mongoURI); // Debugging to check if the value is loaded
-
-// mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log("Connected to MongoDB"))
-//   .catch(err => console.error("Database connection failed:", err));
-
-// Set up the templating engine
+// Set up the Templating Engine
 app.use(expressLayout); // Use express-ejs-layouts for layout support
 app.set('layout', './layouts/main'); // Specify the main layout file
 app.set('view engine', 'ejs'); // Set EJS as the templating engine
+
+// app.locals.isActiveRoute = isActiveRoute;
 
 // Define the main route using the router in the specified file
 app.use('/', require('./server/routes/main'));
