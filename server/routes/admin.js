@@ -121,6 +121,25 @@ router.get('/add-post', authMiddleware, async (req, res) => {
       }  
 });
 
+/**
+ * POST /
+ * Admin - Create New Post
+*/
+router.post('/add-post', authMiddleware, async (req, res) => {
+    try {
+   console.log(req.body)
+   res.redirect('/dashboard');
+
+
+
+    
+      } catch (error) {
+        console.log(error);
+      }  
+});
+
+
+
 
   /**
  * Basic GET / POST
