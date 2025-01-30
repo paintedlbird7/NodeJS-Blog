@@ -1,8 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
+const User = require('../models/User');
 
 const adminLayouts = '../views/layouts/admin';
+
+router.post('/admin', async (req, res) => {
+    try {
+    const { username, password } = req.body;
+    console.log(req.body)
+    res.redirect('./admin') // for testing purposes
+
+      res.render('admin/index', { locals, layout: adminLayouts });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
 /**
  * GET /
  * ADMIN - Login Page
