@@ -6,8 +6,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const express = require('express'); // Import the Express framework
+const methodOverride = require('method-override');
 const expressLayout = require('express-ejs-layouts'); // Import express-ejs-layouts for layout management
 const connectDB = require('./server/config/db'); // Import the database connection function
+const { isActiveRoute } = require('./server/helpers/routeHelpers');
 
 const app = express(); // Initialize the Express app
 const PORT = process.env.PORT || 5001; // Set the port from the environment variable or use 5001 as default
@@ -21,6 +23,7 @@ connectDB(); // Connects to MongoDB using the URI from the .env file
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 
 app.use(session({
     secret: 'keyboard cat',
@@ -40,7 +43,7 @@ app.use(expressLayout); // Use express-ejs-layouts for layout support
 app.set('layout', './layouts/main'); // Specify the main layout file
 app.set('view engine', 'ejs'); // Set EJS as the templating engine
 
-// app.locals.isActiveRoute = isActiveRoute;
+app.locals.isActiveRoute = isActiveRoute;
 
 // Define the main route using the router in the specified file
 app.use('/', require('./server/routes/main'));
